@@ -1,16 +1,25 @@
-[![Build Status](https://secure.travis-ci.org/tdegrunt/jsonschema.svg)](http://travis-ci.org/tdegrunt/jsonschema)
 
 # jsonschema
 [JSON schema](http://json-schema.org/) validator, which is designed to be fast and simple to use.
 The latest IETF published draft is v4, this library is mostly v4 compatible.
 
-## Contributing & bugs
-Please fork the repository, make the changes in your fork and include tests. Once you're done making changes, send in a pull request.
+## Forked from [tdegrunt/jsonschema](https://github.com/tdegrunt/jsonschema)
 
-### Bug reports
-Please include a test which shows why the code fails.
+## Why did I fork this?
+I wanted the default functionality that is referenced in the above spec, so I added it. Now by passing
+```javascript
+  {setDefaults: true}
+```
+as the third argument to the `validate()` method, after the initial blob is validated if a `default` key is set on
+a property that wasn't included in the blob the property will be added with the default. No need for yet another piece
+of middleware that will add an extra 1000 lines of code and an untold amount of dependencies. All credit goes to
+github user [kokeksibir](https://github.com/kokeksibir) for this solution, see [PR#154](https://github.com/tdegrunt/jsonschema/pull/154).
 
 ## Usage
+
+### Docs
+I found a very good quick reference [here](https://spacetelescope.github.io/understanding-json-schema/index.html).
+It is short and concise and will give you a good basic understanding.
 
 ### Simple
 Simple object validation using JSON schemas.
@@ -123,7 +132,7 @@ validator.validate('foo', {type: 'string', format: 'myFormat'}).valid; // false
 ### Results
 The first error found will be thrown as an `Error` object if `options.throwError` is `true`.  Otherwise all results will be appended to the `result.errors` array which also contains the success flag `result.valid`.
 
-When `oneOf` or `anyOf` validations fail, errors that caused any of the sub-schemas referenced therein to fail are not reported, unless `options.nestedErrors` is truthy. This option may be useful when troubleshooting validation errors in complex schemas. 
+When `oneOf` or `anyOf` validations fail, errors that caused any of the sub-schemas referenced therein to fail are not reported, unless `options.nestedErrors` is truthy. This option may be useful when troubleshooting validation errors in complex schemas.
 
 ### Custom properties
 Specify your own JSON Schema properties with the validator.attributes property:
